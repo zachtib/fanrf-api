@@ -10,7 +10,8 @@ Group=fancontroller
 RuntimeDirectory=fancontroller
 WorkingDirectory=/opt/fancontroller/repository
 Environment="PATH=/opt/fancontroller/environment/bin"
-ExecStart=gunicorn --pid /run/fancontroller/pid   \
+ExecStart=/opt/fancontroller/environment/bin/gunicorn \
+          --pid /run/fancontroller/pid   \
           --bind unix:/run/fancontroller/socket webapp:app
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
