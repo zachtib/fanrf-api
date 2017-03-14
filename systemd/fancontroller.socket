@@ -1,0 +1,8 @@
+[Unit]
+Description=fancontroller socket
+
+[Socket]
+ListenStream=/run/fancontroller/socket
+
+[Install]
+WantedBy=sockets.target
