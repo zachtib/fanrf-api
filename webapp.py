@@ -18,7 +18,7 @@ def status():
 
 
 @app.route('/fan/<int:fan_speed>/')
-def fan_control(fan_speed: int):
+def fan_control(fan_speed):
     try:
         return jsonify(controller.set_fan_speed(fan_speed))
     except FanControlError as error:
@@ -26,7 +26,7 @@ def fan_control(fan_speed: int):
 
 
 @app.route('/light/<int:brightness>/')
-def brightness_control(brightness: int):
+def brightness_control(brightness):
     try:
         return jsonify(controller.set_brightness(brightness))
     except FanControlError as error:
