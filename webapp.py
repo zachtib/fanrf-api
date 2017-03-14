@@ -7,6 +7,11 @@ app = Flask(__name__)
 controller = FanController()
 
 
+@app.route('/')
+def index():
+    return 'OK'
+
+
 @app.route('/status/')
 def status():
     return jsonify(controller.get_status())
