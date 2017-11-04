@@ -1,9 +1,14 @@
+import os
+
 class FanControlError(Exception):
     def __init__(self, message):
         self.message = message
 
     def to_result(self):
         return dict(message=self.message, success=False)
+
+
+fan_speeds = ['off', 'low', 'medium', 'high']
 
 
 class FanController:
@@ -28,9 +33,10 @@ class FanController:
         return self._send()
 
     def _send(self):
-        print(self._encode())  # TODO: send the state to the RF module here
+        cmd = self._encode()
+        print(cmd)
+        os.system(cmd)
         return dict(fan_speed=self._fan_speed, brightness=self._brightness, success=True)
 
     def _encode(self):
-        # TODO: Make this return the correct format
-        return '{0:04b}'.format(self._fan_speed) + '{0:08b}'.format(self._brightness)
+        return f'/root/fanrf/target/debug/fanrf --spidev=/dev/spidev1.0 --irq=10 --shutdown=7 --address=15 smart {fan_speeds[self._fan_speed]} {self._brightness}'
