@@ -1,5 +1,6 @@
 import os
 
+
 class FanControlError(Exception):
     def __init__(self, message):
         self.message = message
@@ -12,7 +13,6 @@ fan_speeds = ['off', 'low', 'medium', 'high']
 
 
 class FanController:
-
     def __init__(self):
         self._fan_speed = 0
         self._brightness = 0
@@ -39,4 +39,7 @@ class FanController:
         return dict(fan_speed=self._fan_speed, brightness=self._brightness, success=True)
 
     def _encode(self):
-        return f'/root/fanrf/target/debug/fanrf --spidev=/dev/spidev1.0 --irq=10 --shutdown=7 --address=15 smart {fan_speeds[self._fan_speed]} {self._brightness}'
+        return ('/root/fanrf/target/debug/fanrf --spidev=/dev/spidev1.0 '
+                '--irq=10 --shutdown=7 --address=15 smart ') + \
+                fan_speeds[self._fan_speed] + ' ' + \
+                str(self._brightness)
